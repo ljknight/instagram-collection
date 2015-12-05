@@ -1,0 +1,15 @@
+{
+  "name": "instagram-collection",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ljknight/instagram-collection.git"
+  },
+  "author": "Laura Knight",
+  "dependencies": {
+    "body-parser": "^1.14.0",
+    "express": "^4.13.3",
+    "morgan": "^1.6.1"
+  }
+}
