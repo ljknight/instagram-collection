@@ -2,7 +2,7 @@ var EntryView = Backbone.View.extend({
 
   className: 'entry',
 
-  template: _.template('<div>#<%=hashtag%> | @<%=username%></div><a href="<%=permalink%>"> <img src="<%=contentURL%>"></img></a>'),
+  template: _.template('<div>#<%=hashtag%> | @<%=username%></div><a href="<%=permalink%>"><img src="<%=contentURL%>"></img></a>'),
 
   events: {
     'click': 'clickAction'

@@ -21,6 +21,8 @@ var InputView = Backbone.View.extend({
     if(isEnterKey) {
       this.collection.addInstagramEntry(this.$el.val());
       this.resetInput();
+    } else {
+      this.collection.models = [];
     }
 
   },
