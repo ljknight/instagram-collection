@@ -7,7 +7,7 @@ var Instagram = Backbone.Collection.extend({
   addInstagramEntry: function(hashtag, dateStart, dateEnd) {
 
     $.getJSON(
-      'https://api.instagram.com/v1/tags/' + hashtag + '/media/recent?access_token=5420979.1677ed0.dadb612f3c2b45a1ada6b18e058193dd&callback=?',
+      'https://api.instagram.com/v1/tags/' + hashtag + '/media/recent?max_timestamp=1367432682&min_timestamp=1364840682?access_token=TOKEN&callback=?',
       function(data) {
         console.log(data.data)
         for (var i = 0; i < data.data.length; i++) {
