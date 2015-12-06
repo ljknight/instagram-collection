@@ -18,14 +18,14 @@ var port = process.env.PORT || 8080;
 // serve static files
 app.use(express.static(path.resolve(__dirname, '..', 'app')));
 
-db.init().then(function() {
+// db.init().then(function() {
   app.listen(port, function(err) {
     if (err) {
       console.error(err);
     } else {
       console.log('listening on port: ', port);
     }
-  });
+  // });
 });
 
 module.exports = app;

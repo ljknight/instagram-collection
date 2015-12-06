@@ -1,9 +1,11 @@
 var InputView = Backbone.View.extend({
 
-  tagName: 'input',
+  tagName: 'div',
+
+  template:  _.template('<form>Start date: <input type="date" class="start"></input> End date: <input type="date" class="end"></input><input type="text" class="hashtag" placeholder="Enter a hashtag"></input><input type="submit"></input></form>'),
 
   events: {
-    'keydown': 'handleSubmit',
+    'submit form': 'handleSubmit',
   },
 
   initialize: function() {
@@ -11,31 +13,26 @@ var InputView = Backbone.View.extend({
   },
 
   render: function() {
-    this.resetInput();
+    this.$el.html(this.template);
+    this.clearInput();
     return this;
   },
 
-  handleSubmit: function(e) {
-    var isEnterKey = (e.which === 13);
-    console.log(this.collection)
-    if(isEnterKey) {
-      this.collection.addInstagramEntry(this.$el.val());
-      this.resetInput();
-    } else {
+  handleSubmit: function(e) {{
+      // Clear collection
       this.collection.models = [];
+      
+      e.preventDefault();
+      this.collection.addInstagramEntry($('.hashtag').val(), $('.start').val(), $('.end').val());
+      this.clearInput();
     }
 
   },
 
-  resetInput: function() {
-    this.$el.attr({
-      placeholder: 'Enter a hashtag'
-    });
-    this.clearInput();
-  },
-
   clearInput: function() {
-    this.$el.val('');
+    $('.hashtag').val('');
+    $('.start').val('');
+    $('.end').val('');
   }
 
 });
