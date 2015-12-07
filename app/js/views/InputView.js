@@ -23,7 +23,18 @@ var InputView = Backbone.View.extend({
       this.collection.models = [];
       
       e.preventDefault();
-      this.collection.addInstagramEntry($('.hashtag').val(), $('.start').val(), $('.end').val());
+
+      var hashtag = $('.hashtag').val();
+
+      // Remove any '#' characters
+      // TODO: validate input more thoroughly - should not accept spaces or punctuation
+      for (var i = 0; i < hashtag.length; i++) {
+        if (hashtag[i] === '#') {
+          hashtag = hashtag.slice(0,i) + hashtag.slice(i+1, hashtag.length);
+        }
+      }
+
+      this.collection.addInstagramEntry(hashtag, $('.start').val(), $('.end').val());
       this.clearInput();
     }
 

@@ -19,6 +19,12 @@ exports.Instagram = {
 
 };
 
+exports.User = {
+  attributes: {
+    
+  }
+};
+
 sequelize
   .sync({ force: true })
   .then(function(err) {
