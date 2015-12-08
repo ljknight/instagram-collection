@@ -5,6 +5,7 @@ var SignUpView = Backbone.View.extend({
   template: _.template('<form><h2>Sign In or Sign Up</h2><input type="email" class="username" placeholder="Enter your email address"></input><button class="signup">Submit</button></form>'),
 
   initialize: function() {
+    router.navigate('signup');
     this.render();
   },
 
@@ -19,7 +20,7 @@ var SignUpView = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html(this.template);
+    $('#signup').html(this.template);
     return this;
   }
 

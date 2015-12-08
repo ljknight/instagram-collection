@@ -16,9 +16,7 @@ var User = Backbone.Model.extend({
       data: JSON.stringify({username: user}),
       success: function(resp) {
         $('#signup').html('');
-        var app = new AppView({
-          collection: new Instagram()
-        });
+        router.navigate('/app', {trigger: true});
       }
     });
   }

@@ -1,3 +1,2 @@
-var signup = new SignUpView({
-  model: new User()
-});
+var router = new Router();
+Backbone.history.start();
