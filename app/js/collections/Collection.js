@@ -4,15 +4,18 @@ var Collection = Backbone.Collection.extend({
 
   url: '/api/collections',
 
-  getCollections: function() {
-    $.ajax({
-      type: "GET",
-      url: "/api/collections/"+window.localStorage.insta+"",
-      contentType: "application/json",
-      success: function(resp) {
-        console.log(resp)
-      }
-    });
-  }
+  getCollections: function(collection) {
+    $.getJSON("/api/collections/" + window.localStorage.insta + "", function(data) {
+        console.log(data)
+        for (var i = 0; i < data.length; i++) {
+          collection.add({
+            hashtag: data[i].hashtag,
+            dateStart: data[i].dateStart,
+            dateEnd: data[i].dateEnd
+          });
+        }
 
+    });
+
+  }
 });

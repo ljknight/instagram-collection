@@ -32,15 +32,10 @@ var collections = {
       }
     })
       .then(function(user) {
-        db.Collection.findAll({
-          where: {
-            userId: user.id
-          }
-        });
+        return user.getCollections();
       })
       .then(function(collections) {
         res.json(collections);
-        console.log('vollrvyiond', collections);
       })
       .catch(function(err) {
         console.log('Error: ', err);
@@ -67,6 +62,7 @@ var collections = {
         })
           .then(function(collections) {
             res.json(collections);
+            console.log('saved collection', collections)
           })
           .catch(function(err) {
             console.log('Error: ', err);
