@@ -30,3 +30,19 @@ exports.User = {
   }
 };
 
+exports.Instagram = {
+  attributes:{
+
+    hashtag: Sequelize.TEXT,
+    date: Sequelize.INTEGER,
+    user: Sequelize.TEXT,
+    contentURL: Sequelize.TEXT,
+    permalink: Sequelize.TEXT,
+
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    }
+  }
+};

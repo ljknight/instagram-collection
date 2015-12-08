@@ -2,8 +2,8 @@ var router = require('express').Router();
 var db = require('./database/interface');
 var router = require('express').Router();
 
+// TODO: send statuses
 var users = {
-  // TODO: send statuses
 
   signUp: function(req, res) {
     // TODO: add password/auth
@@ -62,7 +62,6 @@ var collections = {
         })
           .then(function(collections) {
             res.json(collections);
-            console.log('saved collection', collections)
           })
           .catch(function(err) {
             console.log('Error: ', err);
@@ -71,6 +70,51 @@ var collections = {
   }
 };
 
+var instagrams = {
+  addEntry: function(req, res) {
+    var collectionid = req.params.collection;
+    var hashtag = req.body.hashtag;
+    var username = req.body.username;
+    var date = req.body.date;
+    var contentURL = req.body.contentURL;
+    var permalink = req.body.permalink;
+    var user = req.body.user;
+
+    db.User.findOne({
+      where: {
+        username: user
+      }
+    })
+      .then(function(user) {
+        db.Collection.findOne({
+          where: {
+            id: collectionid
+          }
+        })
+          .then(function(collection) {
+            db.Instagram.create({
+              userId: user.id,
+              collectionId: collection.id,
+              hashtag: hashtag,
+              date: date,
+              user: username,
+              contentURL: contentURL,
+              permalink: permalink
+            });
+          })
+          .then(function(instagram) {
+            res.json(instagram);
+          })
+          .catch(function(err) {
+            console.log('Error: ', err);
+          });
+      });
+
+  }
+
+};
+
+router.post('/collections/:collection', instagrams.addEntry);
 router.get('/collections/:user', collections.getCollections);
 router.post('/collections', collections.addCollection);
 router.post('/users', users.signUp);
