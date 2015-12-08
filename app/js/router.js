@@ -5,14 +5,19 @@ var Router = Backbone.Router.extend({
   routes : {
     "" : "signup",
     "signup": "signup",
-    "app" : "app"
+    "app" : "app",
+    "collections" : "collections"
   },
 
-  signup : function() {
+  signup: function() {
     var signupview = new SignUpView({model: new User()});
   },
-  app : function() {
+  app: function() {
     var appview = new AppView({collection: new Instagram()});
+  },
+
+  collections: function() {
+    var collectionview = new CollectionView({collection: new Collection()});
   }
 });
 

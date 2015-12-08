@@ -13,7 +13,7 @@ var router = require('./routes');
 var db = require('./database/interface');
 app.use('/api', router);
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 4040;
 
 // serve static files
 app.use(express.static(path.resolve(__dirname, '..', 'app')));

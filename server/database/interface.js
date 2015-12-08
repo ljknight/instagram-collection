@@ -6,15 +6,10 @@ var db = new Sequelize(url);
 
 User = db.define('user', models.User.attributes);
 
-Collection = db.define('entry', models.Collection.attributes);
-
-Instagram = db.define('prompt', models.Instagram.attributes);
+Collection = db.define('collection', models.Collection.attributes);
 
 Collection.belongsTo(User);
 User.hasMany(Collection);
-
-Instagram.belongsTo(Collection);
-Collection.hasMany(Instagram);
 
 var init = function() {
   return db.sync()
@@ -27,7 +22,6 @@ module.exports = {
   sequelize: db,
   User: User,
   Collection: Collection,
-  Instagram: Instagram,
   init: init
 };
 

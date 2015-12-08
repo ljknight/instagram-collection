@@ -2,7 +2,7 @@ var Instagram = Backbone.Collection.extend({
 
   model: InstagramEntry,
 
-  url: '/api/instagrams',
+  url: '/api/collections',
 
   addInstagramEntry: function(hashtag, dateStart, dateEnd) {
 
@@ -12,19 +12,34 @@ var Instagram = Backbone.Collection.extend({
 
     this.hashtag = hashtag;
 
+    // Save to user's collections
+    $.ajax({
+      type: "POST",
+      url: "/api/collections",
+      contentType: "application/json",
+      data: JSON.stringify({
+        hashtag: this.hashtag,
+        dateStart: this.dateStart,
+        dateEnd: this.dateEnd,
+        user: window.localStorage.insta
+      }),
+      success: function(resp) {
+        //
+      }
+    });
+
     $.getJSON(
       // Use getJSON & add empty callback at end of URL to prevent cross-domain issues
       'https://api.instagram.com/v1/tags/' + hashtag + '/media/recent?access_token=5420979.1677ed0.dadb612f3c2b45a1ada6b18e058193dd&callback=?',
       function(data) {
-        console.log(data.data)
         // Always save next page for pagination
         this.nextPage = data.pagination.next_url;
 
         for (var i = 0; i < data.data.length; i++) {
           // Check if hashtag is not in caption - find in comments
-          if (data.data[i].caption.text.indexOf('#'+hashtag) === -1) {
+          if (data.data[i].caption.text.indexOf('#' + hashtag) === -1) {
             for (var j = 0; j < data.data[i].comments.data.length; j++) {
-              if (data.data[i].comments.data[j].text.indexOf('#'+hashtag !== -1) && data.data[i].comments.data[j].from.username === data.data[i].user.username) {
+              if (data.data[i].comments.data[j].text.indexOf('#' + hashtag !== -1) && data.data[i].comments.data[j].from.username === data.data[i].user.username) {
                 this.date = data.data[i].comments.data[j].created_time;
               }
             }
@@ -34,7 +49,7 @@ var Instagram = Backbone.Collection.extend({
           // Find content within date range
           if (this.date >= this.dateStart && this.date <= this.dateEnd) {
             if (data.data[i].type === 'video') {
-              this.create({
+              this.add({
                 hashtag: hashtag,
                 username: data.data[i].user.username,
                 date: this.date,
@@ -42,7 +57,7 @@ var Instagram = Backbone.Collection.extend({
                 permalink: data.data[i].link
               });
             } else {
-              this.create({
+              this.add({
                 hashtag: hashtag,
                 username: data.data[i].user.username,
                 date: this.date,
@@ -68,7 +83,7 @@ var Instagram = Backbone.Collection.extend({
       for (var i = 0; i < data.data.length; i++) {
         if (data.data[i].created_time >= this.dateStart && data.data[i].created_time <= this.dateEnd) {
           if (data.data[i].type === 'video') {
-            this.create({
+            this.add({
               hashtag: this.hashtag,
               username: data.data[i].user.username,
               date: data.data[i].created_time,
@@ -76,7 +91,7 @@ var Instagram = Backbone.Collection.extend({
               permalink: data.data[i].link
             });
           } else {
-            this.create({
+            this.add({
               hashtag: this.hashtag,
               username: data.data[i].user.username,
               date: data.data[i].created_time,

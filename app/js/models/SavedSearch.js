@@ -1,10 +1,9 @@
-var InstagramEntry = Backbone.Model.extend({
+var SavedSearch = Backbone.Model.extend({
 
   defaults: {
     hashtag: '',
-    date: '',
-    contentURL: '',
-    permalink: ''
+    dateStart: '',
+    dateEnd: ''
   },
 
   urlRoot: '/api/collections',

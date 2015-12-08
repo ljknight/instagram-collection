@@ -17,6 +17,8 @@ var SignUpView = Backbone.View.extend({
     e.preventDefault();
     var username = $('.username').val();
     this.model.saveUser(username);
+    // TODO: access username via model
+    window.localStorage.insta = username;
   },
 
   render: function() {

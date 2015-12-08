@@ -15,6 +15,7 @@ var User = Backbone.Model.extend({
       contentType: "application/json",
       data: JSON.stringify({username: user}),
       success: function(resp) {
+        // TODO: Should be in view
         $('#signup').html('');
         router.navigate('/app', {trigger: true});
       }

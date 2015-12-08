@@ -1,14 +1,17 @@
 var router = require('express').Router();
-
 var db = require('./database/interface');
 var router = require('express').Router();
 
-
 var users = {
-  
+  // TODO: send statuses
+
   signUp: function(req, res) {
     // TODO: add password/auth
-    db.User.findOrCreate({where: {username: req.body.username}})
+    db.User.findOrCreate({
+      where: {
+        username: req.body.username
+      }
+    })
       .then(function(user) {
         res.status(200).json(user);
       })
@@ -18,33 +21,62 @@ var users = {
   },
 };
 
-var instagrams = {
+var collections = {
 
-  addInstagram: function(req, res) {
-    console.log('req', req.body)
+  getCollections: function(req, res) {
+    var user = req.params.user;
+
+    db.User.findOne({
+      where: {
+        username: user
+      }
+    })
+      .then(function(user) {
+        db.Collection.findAll({
+          where: {
+            userId: user.id
+          }
+        });
+      })
+      .then(function(collections) {
+        res.json(collections);
+        console.log('vollrvyiond', collections);
+      })
+      .catch(function(err) {
+        console.log('Error: ', err);
+      });
   },
 
-  getAllInstagrams: function(req, res) {
-    db.Instagram.findAll({where: {hashtag: req.params.hashtag}})
-      .then(function(instagrams) {
-        res.json(instagram);
-      })
-      .error(function(err) {
-        console.error(err);
-        res.sendStatus(500);
+  addCollection: function(req, res) {
+    var user = req.body.user;
+    var hashtag = req.body.hashtag;
+    var dateStart = req.body.dateStart;
+    var dateEnd = req.body.dateEnd;
+
+    db.User.findOne({
+      where: {
+        username: user
+      }
+    })
+      .then(function(user) {
+        db.Collection.create({
+          hashtag: hashtag,
+          dateStart: dateStart,
+          dateEnd: dateEnd,
+          userId: user.id,
+        })
+          .then(function(collections) {
+            res.json(collections);
+          })
+          .catch(function(err) {
+            console.log('Error: ', err);
+          });
       });
   }
-
 };
 
-// get all collections
-// get all instagrams inside collection
-// post collection
-// post all instagrams inside collection
-// post user
-// get user
+router.get('/collections/:user', collections.getCollections);
+router.post('/collections', collections.addCollection);
 router.post('/users', users.signUp);
-router.post('/instagrams', instagrams.addInstagram);
-router.get('/instagrams', instagrams.getAllInstagrams);
 
 module.exports = router;
