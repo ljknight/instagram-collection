@@ -9,6 +9,8 @@ var InputView = Backbone.View.extend({
   },
 
   initialize: function() {
+    // TODO: this is to access function in Collection.js - fix!
+    window.addInstagramEntry = this.collection.addInstagramEntry;
     this.render();
   },
 
@@ -33,6 +35,7 @@ var InputView = Backbone.View.extend({
           hashtag = hashtag.slice(0,i) + hashtag.slice(i+1, hashtag.length);
         }
       }
+
 
       this.collection.addInstagramEntry(hashtag, $('.start').val(), $('.end').val());
       this.clearInput();
