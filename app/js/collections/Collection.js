@@ -6,6 +6,7 @@ var Collection = Backbone.Collection.extend({
 
   getCollections: function(collection) {
     $.getJSON("/api/collections/" + window.localStorage.insta + "", function(data) {
+      // console.log('data', data)
         for (var i = 0; i < data.length; i++) {
           collection.add({
             hashtag: data[i].hashtag,
@@ -15,6 +16,12 @@ var Collection = Backbone.Collection.extend({
         }
 
     });
+  },
 
-  }
+  // getEntries: function(collection, collectionid) {
+  //   $.getJSON("/api/collections/" + window.localStorage.insta + "/" + collectionid + "", function(data) {
+  //       console.log('resp', data);
+  //   });
+
+  // }
 });

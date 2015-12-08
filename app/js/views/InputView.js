@@ -2,7 +2,7 @@ var InputView = Backbone.View.extend({
 
   id: 'input',
 
-  template:  _.template('<form>Start date: <input type="date" class="start"></input> End date: <input type="date" class="end"></input><input type="text" class="hashtag" placeholder="Enter a hashtag"></input><input type="submit"></input>'),
+  template:  _.template('<form><div class="date-picker">Start date: <input type="date" class="start"></input> End date: <input type="date" class="end"></input></div><div class="hash-submit">Enter a hashtag: <input type="text" class="hashtag" placeholder="Enter a hashtag"></input><button type="submit">Submit</button></div></form>'),
 
   events: {
     'submit form': 'handleSubmit',

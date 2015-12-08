@@ -4,6 +4,8 @@ var Instagram = Backbone.Collection.extend({
 
   url: '/api/collections',
 
+  currentCollectionId: {},
+
   addInstagramEntry: function(hashtag, dateStart, dateEnd) {
     // Assign arguments to variables accessible to other methods
     this.dateStart = this.convertToTimestamp(dateStart) || 0;
@@ -13,6 +15,7 @@ var Instagram = Backbone.Collection.extend({
 
     var collectionid;
 
+    // TODO: separate out for modularity
     $.ajax({
       type: "POST",
       url: "/api/collections",
@@ -26,10 +29,11 @@ var Instagram = Backbone.Collection.extend({
       success: function(resp) {
         // Save server-side collection id
         collectionid = resp.id;
+        this.currentCollectionId = collectionid;
       }
     });
 
-    // TODO: refactor everything
+    // TODO: refactor 
     $.getJSON(
       // Use getJSON & add empty callback at end of URL to prevent cross-domain issues
       'https://api.instagram.com/v1/tags/' + hashtag + '/media/recent?access_token=TOKEN',
@@ -88,7 +92,7 @@ var Instagram = Backbone.Collection.extend({
       for (var i = 0; i < data.data.length; i++) {
         if (data.data[i].created_time >= this.dateStart && data.data[i].created_time <= this.dateEnd) {
           if (data.data[i].type === 'video') {
-            this.saveEntry(collectionid, hashtag, data.data[i].user.username, this.date, data.data[i].videos.standard_resolution.url, data.data[i].link);
+            this.saveEntry(this.currentCollectionId, this.hashtag, data.data[i].user.username, this.date, data.data[i].videos.standard_resolution.url, data.data[i].link);
             this.add({
               hashtag: this.hashtag,
               username: data.data[i].user.username,
@@ -97,7 +101,7 @@ var Instagram = Backbone.Collection.extend({
               permalink: data.data[i].link
             });
           } else {
-            this.saveEntry(collectionid, hashtag, data.data[i].user.username, this.date, data.data[i].images.standard_resolution.url, data.data[i].link);
+            this.saveEntry(this.currentCollectionId, this.hashtag, data.data[i].user.username, this.date, data.data[i].images.standard_resolution.url, data.data[i].link);
             this.add({
               hashtag: this.hashtag,
               username: data.data[i].user.username,
@@ -131,7 +135,7 @@ var Instagram = Backbone.Collection.extend({
         user: window.localStorage.insta
       }),
       success: function(resp) {
-        console.log(resp)
+        // console.log(resp)
       }
     });
   },

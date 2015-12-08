@@ -2,7 +2,7 @@ var EntryView = Backbone.View.extend({
 
   className: 'entry',
 
-  template: _.template('<div>#<%=hashtag%> | @<%=username%> | <%=date%> </div><a href="<%=permalink%>"><img src="<%=contentURL%>"></img></a>'),
+  template: _.template('<span class="hashtag">#<%=hashtag%></span> <span class="username">@<%=username%></span> <span class="date"><%=date%></span> </div><a href="<%=permalink%>" target="window"><img src="<%=contentURL%>"></img></a>'),
 
   initialize: function() {
     this.listenTo(this.model, 'change', this.render);

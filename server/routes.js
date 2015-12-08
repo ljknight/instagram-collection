@@ -16,13 +16,12 @@ var users = {
         res.status(200).json(user);
       })
       .catch(function(err) {
-        console.log('Error occurred: ', err);
+        console.log('Error occurred at signup: ', err);
       });
   },
 };
 
 var collections = {
-
   getCollections: function(req, res) {
     var user = req.params.user;
 
@@ -38,7 +37,7 @@ var collections = {
         res.json(collections);
       })
       .catch(function(err) {
-        console.log('Error: ', err);
+        console.log('Error occurred at getCollections: ', err);
       });
   },
 
@@ -64,13 +63,39 @@ var collections = {
             res.json(collections);
           })
           .catch(function(err) {
-            console.log('Error: ', err);
+            console.log('Error occurred at addCollection: ', err);
           });
       });
   }
 };
 
 var instagrams = {
+  getEntries: function(req, res) {
+    var user = req.params.user;
+    var collectionid = req.params.collection;
+
+    db.User.findOne({
+      where: {
+        username: user
+      }
+    })
+      .then(function(user) {
+        db.Instagram.findAll({
+          where: {
+            collectionId: collectionid,
+            userId: user.id
+          }
+        })
+          .then(function(instagrams) {
+            res.json(instagrams);
+          });
+      })
+      .catch(function(err) {
+        console.log('Error occurred at getEntries: ', err);
+      });
+
+  },
+
   addEntry: function(req, res) {
     var collectionid = req.params.collection;
     var hashtag = req.body.hashtag;
@@ -106,7 +131,7 @@ var instagrams = {
             res.json(instagram);
           })
           .catch(function(err) {
-            console.log('Error: ', err);
+            console.log('Error occurred at addEntry: ', err);
           });
       });
 
@@ -114,6 +139,7 @@ var instagrams = {
 
 };
 
+// router.get('/collections/:user/:collection', instagrams.getEntries);
 router.post('/collections/:collection', instagrams.addEntry);
 router.get('/collections/:user', collections.getCollections);
 router.post('/collections', collections.addCollection);
