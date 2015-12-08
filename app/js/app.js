@@ -1,3 +1,3 @@
-var app = new AppView({
-  collection: new Instagram()
+var signup = new SignUpView({
+  model: new User()
 });

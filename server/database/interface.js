@@ -1,29 +1,34 @@
 var Sequelize = require('sequelize');
-// var models = require('./models');
 var url = process.env.DATABASE_URL || 'postgres://localhost:5432/instagram';
+var models = require('./models.js');
 
 var db = new Sequelize(url);
 
-// var Instagram = db.define('instagram', models.Instagram.attributes);
+User = db.define('user', models.User.attributes);
 
-// var init = function() {
-//   return db.sync()
-//     .then(function() {
-//       console.log('Database initiated');
-//     });
-// };
-db
-  .authenticate()
-  .then(function(err) {
-    console.log('Connection has been established successfully.');
-  }, function (err) { 
-    console.log('Unable to connect to the database:', err);
-  });
+Collection = db.define('entry', models.Collection.attributes);
+
+Instagram = db.define('prompt', models.Instagram.attributes);
+
+Collection.belongsTo(User);
+User.hasMany(Collection);
+
+Instagram.belongsTo(Collection);
+Collection.hasMany(Instagram);
+
+var init = function() {
+  return db.sync()
+    .then(function() {
+      //
+    });
+};
 
 module.exports = {
   sequelize: db,
-  // Instagram: Instagram,
-  // init: init
+  User: User,
+  Collection: Collection,
+  Instagram: Instagram,
+  init: init
 };
 
 

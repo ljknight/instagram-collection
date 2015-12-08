@@ -2,7 +2,7 @@ var InputView = Backbone.View.extend({
 
   tagName: 'div',
 
-  template:  _.template('<form>Start date: <input type="date" class="start"></input> End date: <input type="date" class="end"></input><input type="text" class="hashtag" placeholder="Enter a hashtag"></input><input type="submit"></input></form>'),
+  template:  _.template('<form>Start date: <input type="date" class="start"></input> End date: <input type="date" class="end"></input><input type="text" class="hashtag" placeholder="Enter a hashtag"></input><input type="submit"></input><button class="save">Save collection</button></form>'),
 
   events: {
     'submit form': 'handleSubmit',
