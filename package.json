@@ -6,6 +6,9 @@
     "type": "git",
     "url": "git+https://github.com/ljknight/instagram-collection.git"
   },
+  "scripts": {
+    "start": "PGSSLMODE=require node ./server/server.js"
+    },
   "author": "Laura Knight",
   "dependencies": {
     "body-parser": "^1.14.0",
