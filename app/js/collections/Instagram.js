@@ -36,7 +36,7 @@ var Instagram = Backbone.Collection.extend({
     // TODO: refactor 
     $.getJSON(
       // Use getJSON & add empty callback at end of URL to prevent cross-domain issues
-      'https://api.instagram.com/v1/tags/' + hashtag + '/media/recent?access_token=TOKEN',
+      'https://api.instagram.com/v1/tags/' + hashtag + '/media/recent?access_token=5420979.1677ed0.dadb612f3c2b45a1ada6b18e058193dd&callback=?',
       function(data) {
         // Always save next page for pagination
         this.nextPage = data.pagination.next_url;

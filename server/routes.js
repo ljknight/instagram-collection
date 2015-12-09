@@ -22,6 +22,7 @@ var users = {
 };
 
 var collections = {
+  
   getCollections: function(req, res) {
     var user = req.params.user;
 
